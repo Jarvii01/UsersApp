@@ -21,13 +21,12 @@ class UsersRepositoryImpl @Inject constructor(
     private val usersRemoteDataSource: UsersRemoteDataSource,
     private val usersLocalDataSource: UsersLocalDataSource,
     private val dao: UsersDao,
-    private val application: Application,
 ) : UsersRepository {
 
     override val loadData: Flow<List<UserDbModel>> = flow {
         val usersDto = usersRemoteDataSource.fetchUsersList()
         val usersDao = usersDto.toDbModelList()
-        emit(usersDao)
+        emit(usersDao.sortedBy { it.username })
         dao.addUserList(usersDao)
     }.stateIn(
         scope = CoroutineScope(Dispatchers.Default),
