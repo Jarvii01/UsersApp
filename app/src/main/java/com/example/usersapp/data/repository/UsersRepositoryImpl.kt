@@ -23,8 +23,8 @@ class UsersRepositoryImpl @Inject constructor(
         dao.addUserList(usersDao)
     }
 
-    override suspend fun getUsersList(): Flow<List<UserDbModel>> =
+    override fun getUsersList(): Flow<List<UserDbModel>> =
         usersLocalDataSource.getUserList()
 
-    override suspend fun getUser(id: Int): Flow<UserDbModel> = usersLocalDataSource.getUser(id)
+    override fun getUser(id: Int): Flow<UserDbModel> = usersLocalDataSource.getUser(id)
 }

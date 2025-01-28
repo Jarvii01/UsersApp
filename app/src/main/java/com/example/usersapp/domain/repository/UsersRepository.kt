@@ -9,8 +9,8 @@ interface UsersRepository {
     suspend fun loadData()
 
     //Local
-    suspend fun getUsersList(): Flow<List<UserDbModel>>
+    fun getUsersList(): Flow<List<UserDbModel>>
 
-    suspend fun getUser(id: Int): Flow<UserDbModel>
+    fun getUser(id: Int): Flow<UserDbModel>
 
 }

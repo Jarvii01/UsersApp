@@ -32,6 +32,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -68,6 +73,7 @@ dependencies {
 
     //Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UsersLocalDataSourceImpl @Inject constructor(
     private val dao: UsersDao
 ) : UsersLocalDataSource {
-    override suspend fun getUserList(): Flow<List<UserDbModel>> = dao.getUsers()
+    override fun getUserList(): Flow<List<UserDbModel>> = dao.getUsers()
 
-    override suspend fun getUser(id: Int): Flow<UserDbModel> = dao.getUserById(id)
+    override fun getUser(id: Int): Flow<UserDbModel> = dao.getUserById(id)
 }

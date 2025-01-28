@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface UsersLocalDataSource {
 
-    suspend fun getUserList(): Flow<List<UserDbModel>>
+    fun getUserList(): Flow<List<UserDbModel>>
 
-    suspend fun getUser(id: Int): Flow<UserDbModel>
+    fun getUser(id: Int): Flow<UserDbModel>
 
 }
