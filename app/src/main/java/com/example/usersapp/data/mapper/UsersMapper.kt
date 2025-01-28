@@ -8,14 +8,14 @@ fun UserDto.toDbModel(): UserDbModel = UserDbModel(
     name = name,
     username = username,
     email = email,
-    addressStreet = address.firstOrNull()?.street.toString(),
-    addressSuite = address.firstOrNull()?.suite.toString(),
-    addressCity = address.firstOrNull()?.city.toString(),
+    addressStreet = address.street,
+    addressSuite = address.suite,
+    addressCity = address.city,
     phone = phone,
     website = website,
-    companyName = company.firstOrNull()?.name.toString(),
-    companyCatchPhrase = company.firstOrNull()?.catchPhrase.toString(),
-    companyBs = company.firstOrNull()?.bs.toString()
+    companyName = company.name,
+    companyCatchPhrase = company.catchPhrase,
+    companyBs = company.bs
 )
 
 fun List<UserDto>.toDbModelList(): List<UserDbModel> = map { it.toDbModel() }

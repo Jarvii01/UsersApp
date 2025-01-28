@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 android {
@@ -58,10 +60,14 @@ dependencies {
 
     //Room
     implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     //Dagger
-    implementation("com.google.dagger:dagger:2.55")
-    annotationProcessor("com.google.dagger:dagger-compiler:2.55")
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+
+    //Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

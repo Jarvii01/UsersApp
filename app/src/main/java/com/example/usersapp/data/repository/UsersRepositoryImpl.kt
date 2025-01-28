@@ -1,5 +1,6 @@
 package com.example.usersapp.data.repository
 
+import android.util.Log
 import com.example.usersapp.data.dataSource.UsersLocalDataSource
 import com.example.usersapp.data.dataSource.UsersRemoteDataSource
 import com.example.usersapp.data.local.dao.UsersDao
@@ -17,8 +18,9 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun loadData() {
         val usersDto = usersRemoteDataSource.fetchUsersList()
-        val usersDao = usersDto.toDbModelList()
-        dao.addUserList(usersDao)
+        Log.d("UsersRepositoryImpl", usersDto.toString())
+//        val usersDao = usersDto.toDbModelList()
+//        dao.addUserList(usersDao)
     }
 
     override suspend fun getUsersList(): Flow<List<UserDbModel>> =

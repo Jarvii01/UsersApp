@@ -1,17 +1,27 @@
 package com.example.usersapp.di
 
-import android.content.Context
+import android.app.Application
+import com.example.usersapp.UsersApp
+import com.example.usersapp.di.annotations.ApplicationScope
+import com.example.usersapp.di.module.DataModule
+import com.example.usersapp.di.module.ViewModelModule
+import com.example.usersapp.screens.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 
-@Component(modules = [DataModule::class])
+@ApplicationScope
+@Component(modules = [DataModule::class, ViewModelModule::class])
 interface ApplicationComponent {
 
+
+    fun inject(context: UsersApp)
+
+    fun inject(activity: MainActivity)
 
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance context: Context
+            @BindsInstance application: Application
         ): ApplicationComponent
     }
 

@@ -1,29 +1,36 @@
 package com.example.usersapp.screens
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.usersapp.R
-import com.example.usersapp.data.remote.ApiFactory
+import com.example.usersapp.UsersApp
+import com.example.usersapp.data.remote.api.ApiFactory
+import com.example.usersapp.di.ViewModelFactory
+import com.example.usersapp.screens.usersScreen.UsersViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val apiService = ApiFactory.api
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[UsersViewModel::class.java]
+    }
+
+    private val component by lazy {
+        (application as UsersApp).component
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        scope.launch {
-            apiService.getUsers()
-        }
+        viewModel.loadUsers()
 
     }
 }

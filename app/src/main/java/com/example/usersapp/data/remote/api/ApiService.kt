@@ -1,4 +1,4 @@
-package com.example.usersapp.data.remote
+package com.example.usersapp.data.remote.api
 
 import com.example.usersapp.data.remote.model.UserDto
 import retrofit2.http.GET

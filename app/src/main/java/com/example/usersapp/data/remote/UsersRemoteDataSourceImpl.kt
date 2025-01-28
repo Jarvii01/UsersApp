@@ -1,6 +1,7 @@
 package com.example.usersapp.data.remote
 
 import com.example.usersapp.data.dataSource.UsersRemoteDataSource
+import com.example.usersapp.data.remote.api.ApiService
 import com.example.usersapp.data.remote.model.UserDto
 import javax.inject.Inject
 
