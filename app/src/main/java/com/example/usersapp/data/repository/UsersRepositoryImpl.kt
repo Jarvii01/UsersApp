@@ -19,8 +19,8 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun loadData() {
         val usersDto = usersRemoteDataSource.fetchUsersList()
         Log.d("UsersRepositoryImpl", usersDto.toString())
-//        val usersDao = usersDto.toDbModelList()
-//        dao.addUserList(usersDao)
+        val usersDao = usersDto.toDbModelList()
+        dao.addUserList(usersDao)
     }
 
     override suspend fun getUsersList(): Flow<List<UserDbModel>> =
