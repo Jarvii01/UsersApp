@@ -13,6 +13,7 @@ import com.example.usersapp.UsersApp
 import com.example.usersapp.data.local.dao.entity.UserDbModel
 import com.example.usersapp.databinding.FragmentUsersListBinding
 import com.example.usersapp.di.ViewModelFactory
+import com.example.usersapp.screens.userDetailsScreen.UserDetailsFragment
 import com.example.usersapp.screens.usersListScreen.adapter.UsersListAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -64,16 +65,17 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
         usersListAdapter.onUserItemClick = object : UsersListAdapter.OnUserItemClick {
             override fun onUserItemClick(dbModel: UserDbModel) {
-//                launchUserItemFragment(dbModel.id)
+                launchUserItemFragment(dbModel.id)
             }
 
         }
     }
 
-//    private fun launchUserItemFragment(id: Int) {
-//        activity?.supportFragmentManager?.beginTransaction()
-////            ?.replace()
-//            ?.addToBackStack(null)
-//            ?.commit()
-//    }
+    private fun launchUserItemFragment(id: Int) {
+        activity?.supportFragmentManager?.popBackStack()
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.users_list_fragment, UserDetailsFragment().getInstance(id))
+            ?.addToBackStack(null)
+            ?.commit()
+    }
 }
