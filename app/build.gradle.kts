@@ -46,15 +46,22 @@ dependencies {
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
 
-    //Network
+    //Retrofit
     implementation(libs.retrofit)
 
     //OkHttp
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-    //Database
+    //Gson
+    implementation(libs.converter.gson)
+
+    //Room
     implementation(libs.androidx.room.runtime)
+
+    //Dagger
+    implementation("com.google.dagger:dagger:2.55")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.55")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
