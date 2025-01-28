@@ -6,11 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface UsersRepository {
 
     //Remote
-    suspend fun loadData()
+    val loadData: Flow<List<UserDbModel>>
 
     //Local
-    fun getUsersList(): Flow<List<UserDbModel>>
-
     fun getUser(id: Int): Flow<UserDbModel>
 
 }

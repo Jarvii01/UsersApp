@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.usersapp.R
 import com.example.usersapp.UsersApp
 import com.example.usersapp.data.local.dao.entity.UserDbModel
 import com.example.usersapp.databinding.FragmentUsersListBinding
 import com.example.usersapp.di.ViewModelFactory
+import com.example.usersapp.screens.State
 import com.example.usersapp.screens.userDetailsScreen.UserDetailsFragment
 import com.example.usersapp.screens.usersListScreen.adapter.UsersListAdapter
 import kotlinx.coroutines.launch
@@ -35,6 +39,8 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
         ViewModelProvider(this, viewModelFactory)[UsersListViewModel::class.java]
     }
 
+    private val usersListAdapter = UsersListAdapter()
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
@@ -51,23 +57,37 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.loadUsers()
-
-        val usersListAdapter = UsersListAdapter()
         binding.rvUsersList.adapter = usersListAdapter
-
-        lifecycleScope.launch {
-            viewModel.getUsers().collect {
-                usersListAdapter.submitList(it)
-            }
-        }
-
+        observeViewModel()
         usersListAdapter.onUserItemClick = object : UsersListAdapter.OnUserItemClick {
             override fun onUserItemClick(dbModel: UserDbModel) {
                 launchUserItemFragment(dbModel.id)
             }
 
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state.collect {
+                    when (it) {
+                        State.Initial -> {
+                            binding.progressBarLoading.isVisible = false
+                        }
+
+                        State.Loading -> {
+                            binding.progressBarLoading.isVisible = true
+                        }
+
+                        is State.Content -> {
+                            binding.progressBarLoading.isVisible = false
+                            usersListAdapter.submitList(it.usersList)
+                        }
+
+                    }
+                }
+            }
         }
     }
 
